@@ -18,7 +18,7 @@ The module uses the ultrasound sensor to detect the door swinging towards it. Th
 
 Wire everything up like this:
 
-![Wiring Image](Wiring_image_edit2.jpg)
+![Wiring Image](Wiring_Image_edit2.jpg)
 
 Most of the pins can be changed except for the signal pin of the IR emitter. The IR emitter will use PWM_TIMER_2 by default on the Arduino. This means that the actual pin would vary from Arduino model to Arduino model. In the case of the Uno, the pin would be pin 3 while in the case of the Mega, it would be pin 9. Later on, after installing the IRremote library, it is possible to nagivate to the IRremote library header file - *RobotIRremoteInt.h* (default drive: C:\Program Files (x86)\Arduino\libraries\RobotIRremote) get the full list of the timers and their. The user can also change which timer (and thus which pin) they would like to use.
 
