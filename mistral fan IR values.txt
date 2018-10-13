@@ -1,0 +1,5 @@
+Power: 807FD02F
+Timer: 807FF00F
+Speed: 807FE01F
+Breeze: 807FC03F
+Swing: 807FC837
