@@ -110,29 +110,15 @@ void loop() {
   int distanceV = ultrasound();
   
   // Guest Detection 
-  if (distanceV < detectionDistance) {
-  guest_detected = true;
-  } else {
-  guest_detected = false;
-  }
-
-  if (guest_detected) {
-      IRblast();
-  }
+  distanceV < detectionDistance ? (guest_detected = true,IRblast()) : (guest_detected = false);
 
 // ================================ DEBUG PRINTS ====================================
   if (debug_prints) {
-    Serial.print("Distance: ");
+    Serial.print(F("Distance: "));
     Serial.print(distanceV);
-    if (guest_detected) {
-      Serial.println(" - Guest detected");
-    } else {
-      Serial.println("\t");
-    }
+    guest_detected ? Serial.println(F(" - Guest detected")) : Serial.println("\t");
   }
-  if (LED_Display_print) {
-    displayDistance(distanceV);
-  }
+  if (LED_Display_print) displayDistance(distanceV);
 // ==================================================================================
 
   delay(200);
@@ -151,25 +137,17 @@ int ultrasound() {
   // READS THE REBOUNDED BURST
   duration = pulseIn(echoPin, HIGH);
     // Calculating the distance
-  distance= duration*0.034/2;
-  // Set Distance to a meaningful cap
-  if (distance > 450) {
-    distance = 450;
-  }
-  return distance;
+  
+  return distance > 450 ? 450 : duration*0.034/2;
 }
 
 // TM1637 DISPLAY FUNCTION
 void displayDistance(int distanceV) {
   // CONVERTS distance int value into an array
   int distanceValueArray[4];
-  for (int i = 3; i >= 0; i--) {
-    distanceValueArray[i] = distanceV % 10;
-    distanceV /= 10;
-  }
+  
+  for (char i = 3; i >= 0; distanceValueArray[i--] = distanceV % 10) distanceV /= 10;
+  
   // DISPLAY PRINTS
-  tm1637.display(0,distanceValueArray[0]);
-  tm1637.display(1,distanceValueArray[1]);
-  tm1637.display(2,distanceValueArray[2]);
-  tm1637.display(3,distanceValueArray[3]);
-}
+  for(char i=0;i<=3;tm1637.display(i,distanceValueArray[i++]);
+      }
